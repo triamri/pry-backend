@@ -1,9 +1,13 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+/* users. */
+router.post('/signin', );
+router.post('/signup', );
+router.put('/update', );
+router.get('/detail');
+
+/* admin. */
+router.delete('/remove/:id', );
 
 module.exports = router;
