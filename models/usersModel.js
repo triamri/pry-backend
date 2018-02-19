@@ -41,7 +41,7 @@ const usersModel = new Schema({
   }
 });
 
-usersModel.pre('save',(next) => {
+usersModel.pre('save',function (next) {
   if (this.isModified('password') || this.isNew) {
     let salt = bcrypt.genSaltSync(10);
     this.password = bcrypt.hashSync(this.password, salt);
