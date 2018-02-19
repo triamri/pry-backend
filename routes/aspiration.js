@@ -1,19 +1,23 @@
 const express = require('express');
 const router = express.Router();
+const {
+  getAllAspiration,
+  getUserAspiration,
+  detailAspiration,
+  saveAspiration,
+  publishAspiration,
+  removeAspiration
+} = require('../controllers/aspirationController');
 
 /* Users. */
-router.get('/all', );
-router.get('/detail/:id', );
-router.post('/', );
-router.put('/update/:id', );
-router.delete('/remove/:id', );
+router.get('/all', getAllAspiration);
+router.get('/user', getUserAspiration);
+router.get('/detail/:id', detailAspiration);
+router.post('/', saveAspiration);
+
 
 /* Users. */
-router.get('/admin/all', );
-router.get('/admin/detail/:id', );
-router.post('/admin', );
-router.put('/admin/update/:id', );
-router.delete('/admin/remove/:id', );
-
+router.put('/update/:id', publishAspiration);
+router.delete('/remove/:id', removeAspiration);
 
 module.exports = router;
