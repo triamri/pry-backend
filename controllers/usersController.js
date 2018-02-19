@@ -71,7 +71,7 @@ const updateUser = (req, res) => {
     contact: req.body.contact,
     address: req.body.address
   }
-  Users.findByIdAndUpdate(req.decode.id, updateUser)
+  Users.findByIdAndUpdate(req.decoded.id, updateUser)
     .then((data) => {
       res.status(200).json({
         msh: 'update sukses',
@@ -84,7 +84,7 @@ const updateUser = (req, res) => {
 
 const detailUser = (req, res) => {
   
-  Users.findById(req.decode.id)
+  Users.findById(req.decoded.id)
     .then((data) => {
       res.status(200).json({
         msg: 'data user',
@@ -97,7 +97,7 @@ const detailUser = (req, res) => {
 
 const changePassword = (req, res) => {
   
-  Users.findById(req.decode.id)
+  Users.findById(req.decoded.id)
     .then((data) => {
       if (!data) {
         res.status(403).json({
