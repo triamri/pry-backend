@@ -1,8 +1,6 @@
-import { Schema } from 'mongoose';
-
 const mongoose = require('mongoose');
 
-const schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const aspirationModel = new Schema({
   aspiration: {
