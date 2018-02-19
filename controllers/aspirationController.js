@@ -2,7 +2,9 @@ const Aspiration = require('../models/aspirationModel');
 
 const getAllAspiration = (req, res) => {
   
-  Aspiration.find()
+  Aspiration.find({
+    publish: 'Y'
+  })
     .then((results) => {
       res.status(200).json({
         msg: 'data aspirasi',
@@ -16,7 +18,8 @@ const getAllAspiration = (req, res) => {
 const getUserAspiration = (req, res) => {
 
   Aspiration.find({
-    _id: req.decode.id
+    userID: req.decoded.id,
+    publish: 'Y'
   }).then((results) => {
       res.status(200).json({
         msg: 'data aspirasi',
@@ -44,7 +47,7 @@ const saveAspiration = (req, res) => {
 
   let newAspiration = new Aspiration({
     aspiration: req.body.aspiration,
-    userID: req.decode.id
+    userID: req.decoded.id
   });
 
   newAspiration.save()
@@ -61,7 +64,7 @@ const saveAspiration = (req, res) => {
 const publishAspiration = (req, res) => {
 
   let publish = {
-    publish: 'Y'
+    publish: req.body.publish
   }
 
   Aspiration.findByIdAndUpdate(req.params.id, publish)
@@ -77,7 +80,9 @@ const publishAspiration = (req, res) => {
 
 const removeAspiration = (req, res) => {
 
-  Aspiration.remove(req.params.id)
+  Aspiration.remove({
+    _id: req.params.id
+  })
     .then((data) => {
       res.status(200).json({
         msg: 'remove',
