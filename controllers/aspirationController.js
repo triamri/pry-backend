@@ -5,13 +5,30 @@ const getAllAspiration = (req, res) => {
   Aspiration.find({
     publish: 'Y'
   })
-    .then((results) => {
-      res.status(200).json({
-        msg: 'data aspirasi',
-        data: results
-      })
+  .populate('userID')
+  .then((results) => {
+    res.status(200).json({
+      msg: 'data aspirasi',
+      data: results
     })
-    .catch(err => console.log(err))
+  })
+  .catch(err => console.log(err))
+
+}
+
+const getCekAspiration = (req, res) => {
+  
+  Aspiration.find({
+    publish: 'N'
+  })
+  .populate('userID')
+  .then((results) => {
+    res.status(200).json({
+      msg: 'data aspirasi',
+      data: results
+    })
+  })
+  .catch(err => console.log(err))
 
 }
 
@@ -20,13 +37,15 @@ const getUserAspiration = (req, res) => {
   Aspiration.find({
     userID: req.decoded.id,
     publish: 'Y'
-  }).then((results) => {
+  })
+  .populate('userID')
+  .then((results) => {
       res.status(200).json({
         msg: 'data aspirasi',
         data: results
       })
     })
-    .catch(err => console.log(err))
+  .catch(err => console.log(err))
 
 }
 
@@ -95,6 +114,7 @@ const removeAspiration = (req, res) => {
 
 module.exports = {
   getAllAspiration,
+  getCekAspiration,
   getUserAspiration,
   detailAspiration,
   saveAspiration,

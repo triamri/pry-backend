@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { 
   signIn, 
-  signUp, 
+  signUp,
+  AllUsers,
   detailUser,
   updateUser,
   changePassword,
@@ -18,6 +19,7 @@ router.put('/password', authUser, changePassword);
 router.get('/detail', authUser, detailUser);
 
 /* admin. */
+router.get('/all', authUser, AllUsers);
 router.delete('/remove/:id', authUser, authAdmin, removeuser);
 
 module.exports = router;
