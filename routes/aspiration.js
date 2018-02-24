@@ -3,6 +3,7 @@ const router = express.Router();
 const {
   getAllAspiration,
   getUserAspiration,
+  getCekAspiration,
   detailAspiration,
   saveAspiration,
   publishAspiration,
@@ -12,6 +13,7 @@ const { authUser, authAdmin } = require('../middleware/auth');
 
 /* Users. */
 router.get('/all', authUser, getAllAspiration);
+router.get('/cek', authUser, getCekAspiration);
 router.get('/user', authUser, getUserAspiration);
 router.get('/detail/:id', authUser, detailAspiration);
 router.post('/', authUser, saveAspiration);

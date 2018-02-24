@@ -93,7 +93,22 @@ const detailUser = (req, res) => {
     })
     .catch(err => console.log(err))
 
-} 
+}
+
+const AllUsers = (req, res) => {
+  
+  Users.find({
+    role: 'user'
+  })
+    .then((results) => {
+      res.status(200).json({
+        msg: 'data user',
+        data: results
+      })
+    })
+    .catch(err => console.log(err))
+
+}
 
 const changePassword = (req, res) => {
   
@@ -146,5 +161,6 @@ module.exports = {
   detailUser,
   changePassword,
   updateUser,
+  AllUsers,
   removeuser
 }
