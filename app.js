@@ -3,12 +3,14 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
-require('dotenv').config()
+const cors = require('cors');
+require('dotenv').config();
 
 mongoose.connect('mongodb://localhost/pry');
 
 const app = express();
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
