@@ -3,48 +3,53 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
-const signUp = (req, res) => {
+// const signUp = (req, res) => {
 
-  let newUser = new Users({
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    email: req.body.email,
-    password: req.body.password,
-    contact: req.body.contact,
-    address: req.body.address
-  });
+//   let newUser = new Users({
+//     firstName: req.body.firstName,
+//     lastName: req.body.lastName,
+//     email: req.body.email,
+//     password: req.body.password,
+//     contact: req.body.contact,
+//     address: req.body.address
+//   });
 
-  newUser.save()
-    .then((data) => {
-      res.status(200).json({
-        msg: 'signup berhasil',
-        data: data
-      })
-    })
-    .catch(err => console.log(err))
+//   newUser.save()
+//     .then((data) => {
+//       res.status(200).json({
+//         msg: 'signup berhasil',
+//         data: data
+//       })
+//     })
+//     .catch(err => console.log(err))
 
-}
+// }
 
 const signIn = (req, res) => {
 
   let email = req.body.email;
-  let password = req.body.password;
 
   Users.find({
     email: email
   }).then((dataUser) => {
     if (dataUser.length === 0) {
-      res.status(403).json({
-        user: false,
-        password: false
-      })
-    } 
-
-    if(!bcrypt.compareSync(password, dataUser[0].password)) {
-      res.status(403).json({
-        user: true,
-        password: false
-      })
+      let newUser = new Users({
+        name: req.body.name,
+        email: req.body.email,
+        photo: req.body.photo || 'https://www.jainsusa.com/images/store/landscape/not-available.jpg'
+      });
+    
+      newUser.save()
+        .then((data) => {
+          jwt.sign({
+            id: data._id,
+            email: data.email
+          }, process.env.SECRET_KEY, (err, token) => {
+            res.status(200).json({
+              access_token: token
+            })
+          });
+        })
     }
 
     jwt.sign({
@@ -52,8 +57,6 @@ const signIn = (req, res) => {
       email: dataUser[0].email
     }, process.env.SECRET_KEY, (err, token) => {
       res.status(200).json({
-        user: true,
-        password: true,
         access_token: token
       })
     });
@@ -156,7 +159,7 @@ const removeuser = (req, res) => {
 }
 
 module.exports = {
-  signUp,
+  // signUp,
   signIn,
   detailUser,
   changePassword,

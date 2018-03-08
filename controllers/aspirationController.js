@@ -64,20 +64,35 @@ const detailAspiration = (req, res) => {
 
 const saveAspiration = (req, res) => {
 
-  let newAspiration = new Aspiration({
-    aspiration: req.body.aspiration,
-    userID: req.decoded.id
-  });
+  Aspiration.find({
+    userID: req.decoded.id,
+    create_at: { $lte: new Date() }
+  })
+    .then((result) => {
+      if (result.length === 0) {
+        let newAspiration = new Aspiration({
+          aspiration: req.body.aspiration,
+          userID: req.decoded.id
+        });
+  
+        newAspiration.save()
+          .then((data) => {
+            res.status(200).json({
+              msg: 'data berhasil disimpan',
+              error: true,
+              data: data
+            })
+          })      
+      } else {
+        res.status(200).json({
+          msg: 'maaf, Anda Sudah Mengirimkan Aspiration Hari Ini',
+          error: false
+        })
+      }
 
-  newAspiration.save()
-    .then((data) => {
-      res.status(200).json({
-        msg: 'data berhasil disimpan',
-        data: data
-      })
+
     })
     .catch(err => console.log(err))
-
 }
 
 const publishAspiration = (req, res) => {
