@@ -12,9 +12,9 @@ const {
 const { authUser, authAdmin } = require('../middleware/auth');
 
 /* users. */
-router.post('/signup', signUp);
+// router.post('/signup', signUp);
 router.post('/signin', signIn);
-router.put('/update', authUser, updateUser);
+// router.put('/update', authUser, updateUser);
 router.put('/password', authUser, changePassword);
 router.get('/detail', authUser, detailUser);
 

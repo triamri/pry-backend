@@ -4,27 +4,16 @@ const bcrypt = require('bcryptjs');
 const Schema = mongoose.Schema;
 
 const usersModel = new Schema({
-  firstName: {
+  name: {
     type: String,
     required: [true, 'Maaf Nama Depan Harus di isi']
-  },
-  lastName: {
-    type: String,
-    required: [true, 'Maaf, Nama Belakang Harus di isi']
   },
   email: {
     type: String, 
     required: [true, 'Maaf, Email Harus di isi'],
     unique: true
   },
-  password: {
-    type: String,
-    required: [true, 'Maaf, Password Harus di isi']
-  },
-  contact: {
-    type: String
-  },
-  address: {
+  photo: {
     type: String
   },
   role: {
@@ -41,14 +30,14 @@ const usersModel = new Schema({
   }
 });
 
-usersModel.pre('save',function (next) {
-  if (this.isModified('password') || this.isNew) {
-    let salt = bcrypt.genSaltSync(10);
-    this.password = bcrypt.hashSync(this.password, salt);
-    next();
-  }
-  next();
-});
+// usersModel.pre('save',function (next) {
+//   if (this.isModified('password') || this.isNew) {
+//     let salt = bcrypt.genSaltSync(10);
+//     this.password = bcrypt.hashSync(this.password, salt);
+//     next();
+//   }
+//   next();
+// });
 
 const Users = mongoose.model('Users', usersModel);
 
